@@ -1,0 +1,40 @@
+.App {
+  padding: 200px 100px;
+}
+
+.rich-text-input {
+  width: 100%;
+  min-height: 37px;
+  border: none;
+  outline: none;
+  box-shadow: -1px 1.5px 6px rgba(0, 0, 0, 0.15);
+  padding: 8.5px 13px;
+  resize: none;
+  position: relative;
+  border-radius: 10px;
+  transition: all 0.5s;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.rich-text-input span {
+  color: #0000ff;
+}
+
+.rich-text-input:empty:before {
+  content: attr(dataplaceholder);
+  color: #bbb;
+}
+
+.rich-text-input:focus {
+  box-shadow: -2px 2.5px 10px rgba(0, 0, 0, 0.35);
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
