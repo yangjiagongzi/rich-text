@@ -11,13 +11,21 @@ class App extends Component {
   }
 
   onchange(value) {
-    console.log('^^^^^^^onchange^^^^^^^^');
-    console.log(value);
-    console.log('^^^^^^^^^^^^^^^');
+    console.log('value change:', value);
   }
 
   render() {
     const keyMapping = [
+      {
+        keyCode: 13,
+        altKey: false,
+        ctrlKey: false,
+        shiftKey: false,
+        metaKey: false,
+        keyEvent: () => {
+          console.log('敲了回车');
+        }
+      },
       {
         keyCode: 13,
         shiftKey: true,
@@ -26,14 +34,23 @@ class App extends Component {
         }
       },
       {
-        keyCode: 65,
+        keyCode: 13,
+        preventDefault: true,
+        stopPropagation: true,
+        shiftKey: false,
+        keyEvent: () => {
+          const insertDom = document.createElement('span');
+          insertDom.innerHTML = '@somebody';
+          this._richText.addNode(insertDom);
+          // console.log(this._richText.getNode());
+        }
+      },
+      {
+        keyCode: 8,
         preventDefault: true,
         stopPropagation: true,
         keyEvent: () => {
-          const span2 = document.createElement('span');
-          span2.innerHTML = '@yangning';
-          this._richText.addNode(span2);
-          // console.log(this._richText.getNode());
+          this._richText.delNode(-1);
         }
       }
     ];
