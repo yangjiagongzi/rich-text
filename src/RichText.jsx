@@ -38,7 +38,7 @@ export class RichText extends Component {
     } else {
       const keyEventList = listenKeysMapping.get(keyCode) || [];
       for (const matchingKey of keyEventList) {
-        // 指定了功能键且相等或未指定功能键
+        // 指定了功能键就需要相等或未指定功能键
         if (
           (typeof matchingKey.altKey !== 'boolean' ||
             !!matchingKey.altKey === !!event.altKey) &&
@@ -68,11 +68,16 @@ export class RichText extends Component {
     return true;
   };
 
-  _onInputChange = event => {
+  _onInputChange = () => {
     const { onChange } = this.props;
     if (onChange && typeof onChange === 'function') {
-      onChange(event.target.innerHTML);
+      // emit change event
+      onChange(this.getNode());
     }
+  };
+
+  _autoFocus = () => {
+    this._richText.focus();
   };
 
   getNode = () => {
@@ -93,7 +98,7 @@ export class RichText extends Component {
       insertNode = document.createTextNode(content);
     }
 
-    this._richText.focus();
+    this._autoFocus();
 
     const sel = window.getSelection();
     if (sel.rangeCount > 0) {
@@ -107,17 +112,17 @@ export class RichText extends Component {
       sel.removeAllRanges();
       sel.addRange(contentRange);
     }
-    const { onChange } = this.props;
-    if (onChange && typeof onChange === 'function') {
-      onChange(this.getNode());
-    }
+    this._onInputChange();
   };
 
   clearNode = () => {
     this._richText.innerHTML = '';
+    this._onInputChange();
   };
 
   delNode = n => {
+    this._autoFocus();
+
     const sel = window.getSelection();
     if (sel.rangeCount > 0) {
       let range = sel.getRangeAt(0);
@@ -131,6 +136,21 @@ export class RichText extends Component {
       sel.removeAllRanges();
       sel.addRange(contentRange);
     }
+    this._onInputChange();
+  };
+
+  getInputText = () => {
+    this._autoFocus();
+
+    const sel = window.getSelection();
+    if (sel.rangeCount > 0) {
+      let range = sel.getRangeAt(0);
+      if (range.startContainer.nodeType === 3) {
+        const offset = range.startOffset;
+        return range.startContainer.nodeValue.slice(0, offset);
+      }
+    }
+    return '';
   };
 
   render() {

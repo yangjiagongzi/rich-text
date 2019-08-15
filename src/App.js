@@ -44,14 +44,6 @@ class App extends Component {
           this._richText.addNode(insertDom);
           // console.log(this._richText.getNode());
         }
-      },
-      {
-        keyCode: 8,
-        preventDefault: true,
-        stopPropagation: true,
-        keyEvent: () => {
-          this._richText.delNode(-1);
-        }
       }
     ];
 
