@@ -60,7 +60,7 @@ class App extends Component {
         shiftKey: false,
         metaKey: false,
         keyEvent: () => {
-          console.log('敲了回车');
+          console.log(this._richText._isAlive());
         }
       },
       {
@@ -92,13 +92,7 @@ class App extends Component {
           onChange={this.onchange}
           ref={el => (this._richText = el)}
         />
-        <button
-          onClick={() => {
-            this._richText.delNode(1);
-          }}
-        >
-          123
-        </button>
+        <button>123</button>
       </div>
     );
   }
