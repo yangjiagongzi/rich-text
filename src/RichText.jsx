@@ -87,7 +87,7 @@ export class RichText extends Component {
     }
   };
 
-  _autoFocus = () => {
+  autoFocus = () => {
     if (this._isAlive()) {
       return;
     }
@@ -126,13 +126,13 @@ export class RichText extends Component {
     }
 
     let insertNode;
-    if (content instanceof HTMLElement) {
+    if (content instanceof Node) {
       insertNode = content;
     } else if (typeof content === 'string') {
       insertNode = document.createTextNode(content);
     }
 
-    this._autoFocus();
+    this.autoFocus();
 
     const sel = window.getSelection();
     if (sel.rangeCount > 0) {
@@ -155,7 +155,7 @@ export class RichText extends Component {
   };
 
   delNode = n => {
-    this._autoFocus();
+    this.autoFocus();
 
     const sel = window.getSelection();
     if (sel.rangeCount > 0) {
